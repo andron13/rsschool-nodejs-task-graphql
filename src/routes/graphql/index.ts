@@ -5,6 +5,8 @@ import { memberType } from './types/memberType.js';
 import { profileType } from './types/profileType.js';
 import { postType } from './types/postType.js';
 import { userType } from './types/userType.js';
+import { userResolvers } from './resolvers/userResolvers.js';
+import { memberTypeResolvers } from './resolvers/memberTypeResolvers.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
@@ -15,7 +17,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
       fields: {
         memberTypes: {
           type: new GraphQLList(memberType),
-          resolve: () => prisma.memberType.findMany(),
+          resolve: () => memberTypeResolvers(prisma).memberTypes(),
         },
         posts: {
           type: new GraphQLList(postType),
@@ -23,7 +25,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         users: {
           type: new GraphQLList(userType),
-          resolve: () => prisma.user.findMany(),
+          resolve: userResolvers(prisma).users,
         },
         profiles: {
           type: new GraphQLList(profileType),
