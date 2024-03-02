@@ -1,3 +1,4 @@
+// src/routes/graphql/resolvers/userResolvers.ts
 import { PrismaClient } from '@prisma/client';
 import { handleErrors } from '../utils/handler.js';
 
@@ -39,4 +40,8 @@ export const userResolvers = (prisma: PrismaClient) => ({
       return handleErrors(err, 'An unknown error occurred while deleting user');
     }
   },
+  // TODO userSubscribedTo getter?
+  userSubscribedTo: () => {},
+  // TODO subscribedToUser getter?
+  subscribedToUser: () => {},
 });

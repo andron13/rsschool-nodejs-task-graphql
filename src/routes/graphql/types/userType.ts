@@ -1,3 +1,5 @@
+// src/routes/graphql/types/userType.ts
+
 import {
   GraphQLFloat,
   GraphQLList,
@@ -25,11 +27,11 @@ export const userType = new GraphQLObjectType({
     },
     userSubscribedTo: {
       type: new GraphQLNonNull(new GraphQLList(userType)),
-      resolve: () => {}, // TODO userSubscribedTo getter?
+      resolve: () => {},
     },
     subscribedToUser: {
       type: new GraphQLNonNull(new GraphQLList(userType)),
-      resolve: () => {}, // TODO subscribedToUser getter?
+      resolve: () => {},
     },
   }),
 });
