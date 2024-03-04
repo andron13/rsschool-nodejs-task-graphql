@@ -1,3 +1,6 @@
+import { PrismaClient } from '@prisma/client';
+import DataLoader from 'dataloader';
+
 export interface IMemberType {
   id: string;
   discount: number;
@@ -23,4 +26,15 @@ export interface IUser {
   id: string;
   name: string;
   balance: number;
+}
+
+export interface ContextType {
+  prisma: PrismaClient;
+  loaders: {
+    userProfileLoader: DataLoader<string, IProfile>;
+    userPostLoader: DataLoader<string, IPost[]>;
+    userSubscriptions: DataLoader<string, IUser[]>;
+    userSubscriptionsToUser: DataLoader<string, IUser[]>;
+    memberProfileLoader: DataLoader<string, IMemberType>;
+  };
 }

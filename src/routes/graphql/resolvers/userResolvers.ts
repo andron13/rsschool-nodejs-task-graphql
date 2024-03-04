@@ -1,21 +1,21 @@
-// src/routes/graphql/resolvers/userResolvers.ts
 import { PrismaClient } from '@prisma/client';
 import { handleErrors } from '../utils/handler.js';
+import { httpErrors } from '@fastify/sensible';
 
 export const userResolvers = (prisma: PrismaClient) => ({
   users: async () => {
-    try {
-      return await prisma.user.findMany();
-    } catch (err: unknown) {
-      return handleErrors(err);
-    }
+    const allUser = await prisma.user.findMany();
+
+    if (allUser === null) throw httpErrors.notFound();
+
+    return allUser;
   },
-  user: async (_, args: { id: string }) => {
-    try {
-      // return await prisma.user.findUnique({ where: { id: args.id } });
-    } catch (err: unknown) {
-      return handleErrors(err);
-    }
+  user: async (id: string) => {
+    const uniqueUser = await prisma.user.findFirst({ where: { id: id } });
+
+    if (uniqueUser === null) throw httpErrors.notFound();
+
+    return uniqueUser;
   },
   createUser: async (_, args) => {
     try {
